@@ -1,0 +1,557 @@
+uid: Deye_Inverter_Widget
+tags: []
+props:
+  parameters:
+    - description: Title
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - context: item
+      description: Consumption From Grid
+      label: Consumption From Grid Item
+      name: itemConsumptionFromGrid
+      required: true
+      type: TEXT
+    - context: item
+      description: Daily Consumption From Grid
+      label: Daily Consumption From Grid Item
+      name: itemDailyConsumptionFromGrid
+      required: false
+      type: TEXT
+    - context: item
+      description: Daily Production To Grid
+      label: Daily Production To Grid
+      name: itemDailyProductionToGrid
+      required: false
+      type: TEXT
+    - context: item
+      description: Inverter Temperature
+      label: Inverter Temperature
+      name: itemInverterTemperature
+      required: false
+      type: TEXT
+    - context: item
+      description: Solar Production
+      label: Solar Production Item
+      name: itemSolar
+      required: false
+      type: TEXT
+    - context: item
+      description: Solar Daily Production
+      label: Solar Daily Production Item
+      name: itemDailySolar
+      required: false
+      type: TEXT
+    - context: item
+      description: Home Consumption
+      label: Home Consumption Item
+      name: itemHomeConsumption
+      required: false
+      type: TEXT
+    - context: item
+      description: Daily Home Consumption
+      label: Daily Home Consumption Item
+      name: itemDailyHomeConsumption
+      required: false
+      type: TEXT
+    - context: item
+      description: Battery Consumption
+      label: Battery Consumption Item
+      name: itemBatteryConsumption
+      required: false
+      type: TEXT
+    - context: item
+      description: Daily Battery Consumption
+      label: Daily Battery Consumption Item
+      name: itemDailyBatteryConsumption
+      required: false
+      type: TEXT
+    - context: item
+      description: Daily Battery Charge
+      label: Daily Battery Charge Item
+      name: itemDailyBatteryCharge
+      required: false
+      type: TEXT
+    - context: item
+      description: Battery SOC
+      label: Battery SOC Item
+      name: itemBatterySOC
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Dec 7, 2023, 6:37:04 PM
+component: f7-card
+config:
+  title: = props.title
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          margin: 0
+          padding: 0
+      slots:
+        default:
+          - component: f7-block
+            config:
+              style:
+                margin: 0
+                padding: 0
+                display: flex
+                justify-content: center
+                --f7-theme-color: var(--f7-text-color)
+                --f7-block-font-size: 12px
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: column
+                      align-items: center
+                  slots:
+                    default:
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 100px
+                            width: 100px
+                            border: 3px solid orange
+                            border-radius: 20px
+                            display: flex
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                text: =items[props.itemDailySolar].state
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: green
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-icon
+                              config:
+                                icon: if:mdi:solar-power
+                                height: 30px
+                                color: orange
+                            - component: oh-link
+                              config:
+                                text: =items[props.itemSolar].state
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: green
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 70px
+                            width: 100px
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 100px
+                            width: 100px
+                            border: 3px solid teal
+                            border-radius: 20px
+                            display: flex
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemDailyBatteryCharge].state
+                                iconF7: arrow_left
+                                iconSize: 12px
+                                iconColor: green
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemDailyBatteryConsumption].state
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: red
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: f7-row
+                              config:
+                                style:
+                                  display: flex
+                                  align-items: center
+                                  flex-direction: row
+                                  height: 30px
+                              slots:
+                                default:
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        height: auto
+                                        white-space: nowrap
+                                        font-size: 12px
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: =items[props.itemBatterySOC].displayState
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        height: auto
+                                    slots:
+                                      default:
+                                        - component: oh-icon
+                                          config:
+                                            icon: battery
+                                            state: =items[props.itemBatterySOC].displayState
+                                            style:
+                                              height: 30px
+                                              align-item: cemter
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemBatteryConsumption].state
+                                iconF7: "=(Number.parseInt(items[props.itemBatteryConsumption].state) > 0) ? 'arrow_right' : 'arrow_left'"
+                                iconSize: 12px
+                                iconColor: "=(Number.parseInt(items[props.itemBatteryConsumption].state) > 0) ? 'red' : 'green'"
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                - component: f7-col
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: column
+                      align-items: center
+                  slots:
+                    default:
+                      - component: f7-col
+                        config:
+                          tag: svg
+                          xmlns: http://www.w3.org/2000/svg
+                          viewBox: 0 0 10 150
+                          preserveAspectRatio: xMidYMid slice
+                          style:
+                            width: 20px
+                        slots:
+                          default:
+                            - component: f7-row
+                              config:
+                                tag: path
+                                id: solarpath
+                                d: M0,35 L5,35 L5,65 L10,65
+                                stroke: orange
+                                stroke-width: 1
+                                vector-effect: non-scaling-stroke
+                                fill: none
+                            - component: f7-row
+                              config:
+                                tag: circle
+                                r: 2
+                                vector-effect: non-scaling-stroke
+                                fill: orange
+                                style:
+                                  stroke-width: 4
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      tag: animateMotion
+                                      repeatCount: indefinite
+                                      calcMode: linear
+                                      keyPoints: "=(Number.parseInt(items[props.itemSolar].state) < 0) ? '1;0' : '0;1'"
+                                      keyTimes: "=(Number.parseInt(items[props.itemSolar].state) < 0) ? '0;1' : '0;1'"
+                                      dur: =Math.abs(1000/Number.parseInt(items[props.itemSolar].state))
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            tag: mpath
+                                            xlink:href: "#solarpath"
+                            - component: f7-row
+                              config:
+                                tag: path
+                                id: batterypath
+                                d: M0,115 L5,115 L5,85 L10,85
+                                stroke: teal
+                                stroke-width: 1
+                                vector-effect: non-scaling-stroke
+                                fill: none
+                            - component: f7-row
+                              config:
+                                tag: circle
+                                r: 2
+                                vector-effect: non-scaling-stroke
+                                fill: teal
+                                style:
+                                  stroke-width: 4
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      tag: animateMotion
+                                      repeatCount: indefinite
+                                      calcMode: linear
+                                      keyPoints: "=(Number.parseInt(items[props.itemBatteryConsumption].state) < 0) ? '1;0' : '0;1'"
+                                      keyTimes: "=(Number.parseInt(items[props.itemBatteryConsumption].state) < 0) ? '0;1' : '0;1'"
+                                      dur: =Math.abs(1000/Number.parseInt(items[props.itemBatteryConsumption].state))
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            tag: mpath
+                                            xlink:href: "#batterypath"
+                - component: f7-col
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: column
+                      align-items: center
+                  slots:
+                    default:
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 82px
+                            width: 100px
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 100px
+                            width: 100px
+                            border: 2px solid green
+                            border-radius: 20px
+                            display: flex
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: Inverter
+                            - component: oh-link
+                              config:
+                                text: =Math.round((Number.parseFloat(items[props.itemDailyConsumptionFromGrid].state) + Number.parseFloat(items[props.itemDailyProductionToGrid].state) + Number.parseFloat(items[props.itemDailyBatteryConsumption].state) - Number.parseFloat(items[props.itemDailyBatteryCharge].state) + Number.parseFloat(items[props.itemDailySolar].state) - Number.parseFloat(items[props.itemDailyHomeConsumption].state)) *100)/100 + ' kWh'
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: red
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-icon
+                              config:
+                                icon: if:game-icons:power-generator
+                                height: 30px
+                                color: green
+                            - component: Label
+                              config:
+                                text: =items[props.itemInverterTemperature].state
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                - component: f7-col
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: column
+                      align-items: center
+                  slots:
+                    default:
+                      - component: f7-col
+                        config:
+                          tag: svg
+                          xmlns: http://www.w3.org/2000/svg
+                          viewBox: 0 0 10 150
+                          preserveAspectRatio: xMidYMid slice
+                          style:
+                            width: 20px
+                        slots:
+                          default:
+                            - component: f7-row
+                              config:
+                                tag: path
+                                id: gridpath
+                                d: M10,35 L5,35 L5,65 L0,65
+                                stroke: darkred
+                                stroke-width: 1
+                                vector-effect: non-scaling-stroke
+                                fill: none
+                            - component: f7-row
+                              config:
+                                tag: circle
+                                r: 2
+                                vector-effect: non-scaling-stroke
+                                fill: darkred
+                                style:
+                                  stroke-width: 4
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      tag: animateMotion
+                                      repeatCount: indefinite
+                                      calcMode: linear
+                                      keyPoints: "=(Number.parseInt(items[props.itemConsumptionFromGrid].state) < 0) ? '1;0' : '0;1'"
+                                      keyTimes: "=(Number.parseInt(items[props.itemConsumptionFromGrid].state) < 0) ? '0;1' : '0;1'"
+                                      dur: =Math.abs(1000/Number.parseInt(items[props.itemConsumptionFromGrid].state))
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            tag: mpath
+                                            xlink:href: "#gridpath"
+                            - component: f7-row
+                              config:
+                                tag: path
+                                id: loadpath
+                                d: M10,115 L5,115 L5,85 L0,85
+                                stroke: blue
+                                stroke-width: 1
+                                vector-effect: non-scaling-stroke
+                                fill: none
+                            - component: f7-row
+                              config:
+                                tag: circle
+                                r: 2
+                                vector-effect: non-scaling-stroke
+                                fill: blue
+                                style:
+                                  stroke-width: 4
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      tag: animateMotion
+                                      repeatCount: indefinite
+                                      calcMode: linear
+                                      keyPoints: "=(Number.parseInt(items[props.itemHomeConsumption].state) > 0) ? '1;0' : '0;1'"
+                                      keyTimes: "=(Number.parseInt(items[props.itemHomeConsumption].state) > 0) ? '0;1' : '0;1'"
+                                      dur: =Math.abs(1000/Number.parseInt(items[props.itemHomeConsumption].state))
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            tag: mpath
+                                            xlink:href: "#loadpath"
+                - component: f7-col
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: column
+                      align-items: center
+                  slots:
+                    default:
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 100px
+                            width: 100px
+                            border: 3px solid darkred
+                            border-radius: 20px
+                            display: flex
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemDailyProductionToGrid].state
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: green
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemDailyConsumptionFromGrid].state
+                                iconF7: arrow_left
+                                iconSize: 12px
+                                iconColor: red
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-icon
+                              config:
+                                icon: if:mdi:transmission-tower
+                                height: 30px
+                                color: darkred
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemConsumptionFromGrid].state
+                                iconF7: "=(Number.parseInt(items[props.itemConsumptionFromGrid].state) < 0) ? 'arrow_right' : 'arrow_left'"
+                                iconSize: 12px
+                                iconColor: "=(Number.parseInt(items[props.itemConsumptionFromGrid].state) > 0) ? 'red' : 'green'"
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 70px
+                            width: 100px
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                      - component: f7-block
+                        config:
+                          style:
+                            height: 100px
+                            width: 100px
+                            border: 3px solid blue
+                            border-radius: 20px
+                            display: flex
+                            justify-content: center
+                            align-items: center
+                            flex-direction: column
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                text: =items[props.itemDailyHomeConsumption].state
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: red
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-link
+                              config:
+                                text: =Math.round((Number.parseFloat(items[props.itemDailyConsumptionFromGrid].state) + Number.parseFloat(items[props.itemDailyProductionToGrid].state) + Number.parseFloat(items[props.itemDailyBatteryConsumption].state) - Number.parseFloat(items[props.itemDailyBatteryCharge].state) + Number.parseFloat(items[props.itemDailySolar].state))*100)/100 + ' kWh'
+                                iconF7: arrow_right
+                                iconSize: 12px
+                                iconColor: red
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
+                            - component: oh-icon
+                              config:
+                                icon: if:mdi:home
+                                height: 30px
+                                color: blue
+                            - component: oh-link
+                              config:
+                                text: = items[props.itemHomeConsumption].state
+                                iconF7: "=(Number.parseInt(items[props.itemHomeConsumption].state) > 0) ? 'arrow_right' : 'arrow_left'"
+                                iconSize: 12px
+                                iconColor: "=(Number.parseInt(items[props.itemHomeConsumption].state) > 0) ? 'red' : 'green'"
+                                style:
+                                  font-size: 12px
+                                  white-space: nowrap
